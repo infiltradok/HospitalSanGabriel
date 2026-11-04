@@ -1,0 +1,283 @@
+<section class="entradas-page">
+
+  <!-- ENCABEZADO -->
+  <div class="page-header">
+
+    <h2>Entradas de inventario</h2>
+
+    <p>
+      Registra el ingreso de medicamentos,
+      insumos y materiales hospitalarios.
+    </p>
+
+  </div>
+
+  <!-- FORMULARIO -->
+  <div class="form-card">
+
+    <h3>Registrar nueva entrada</h3>
+
+    <form
+      (submit)="onSubmit($event)"
+      novalidate
+    >
+
+      <div class="form-grid">
+
+        <!-- PRODUCTO -->
+        <div class="field">
+
+          <label for="producto">
+            Producto *
+          </label>
+
+          <select
+            id="producto"
+            [formField]="entradaForm.id_producto"
+          >
+
+            <option value="">
+              Seleccionar producto
+            </option>
+
+            @for (
+              producto of productos();
+              track producto.id_producto
+            ) {
+
+              <option [value]="producto.id_producto">
+                {{ producto.codigo }} -
+                {{ producto.nombre }}
+              </option>
+
+            }
+
+          </select>
+
+          @if (cargandoProductos()) {
+            <small class="hint">
+              Cargando productos...
+            </small>
+          }
+
+          @if (errorProductos()) {
+
+            <small class="error">
+              {{ errorProductos() }}
+            </small>
+
+            <button
+              type="button"
+              class="btn-reintentar"
+              (click)="cargarProductos()"
+            >
+              Reintentar
+            </button>
+
+          }
+
+          @if (
+            entradaForm.id_producto().touched() &&
+            entradaForm.id_producto().invalid()
+          ) {
+
+            @for (
+              error of entradaForm.id_producto().errors();
+              track $index
+            ) {
+
+              <small class="error">
+                {{ error.message }}
+              </small>
+
+            }
+
+          }
+
+        </div>
+
+        <!-- CANTIDAD -->
+        <div class="field">
+
+          <label for="cantidad">
+            Cantidad recibida *
+          </label>
+
+          <input
+            id="cantidad"
+            type="number"
+            step="1"
+            [formField]="entradaForm.cantidad"
+          />
+
+          @if (
+            entradaForm.cantidad().touched() &&
+            entradaForm.cantidad().invalid()
+          ) {
+
+            @for (
+              error of entradaForm.cantidad().errors();
+              track $index
+            ) {
+
+              <small class="error">
+                {{ error.message }}
+              </small>
+
+            }
+
+          }
+
+        </div>
+
+        <!-- NÚMERO DE LOTE -->
+        <div class="field">
+
+          <label for="lote">
+            Número de lote *
+          </label>
+
+          <input
+            id="lote"
+            type="text"
+            placeholder="AMX-2026-002"
+            [formField]="entradaForm.numero_lote"
+          />
+
+          @if (
+            entradaForm.numero_lote().touched() &&
+            entradaForm.numero_lote().invalid()
+          ) {
+
+            @for (
+              error of entradaForm.numero_lote().errors();
+              track $index
+            ) {
+
+              <small class="error">
+                {{ error.message }}
+              </small>
+
+            }
+
+          }
+
+        </div>
+
+        <!-- VENCIMIENTO -->
+        <div class="field">
+
+          <label for="vencimiento">
+            Fecha de vencimiento *
+          </label>
+
+          <input
+            id="vencimiento"
+            type="date"
+            [formField]="entradaForm.fecha_vencimiento"
+          />
+
+          @if (
+            entradaForm.fecha_vencimiento().touched() &&
+            entradaForm.fecha_vencimiento().invalid()
+          ) {
+
+            @for (
+              error of entradaForm.fecha_vencimiento().errors();
+              track $index
+            ) {
+
+              <small class="error">
+                {{ error.message }}
+              </small>
+
+            }
+
+          }
+
+        </div>
+
+        <!-- MOTIVO -->
+        <div class="field full-width">
+
+          <label for="motivo">
+            Motivo de entrada *
+          </label>
+
+          <textarea
+            id="motivo"
+            rows="3"
+            placeholder="Compra de medicamentos para farmacia"
+            [formField]="entradaForm.motivo"
+          ></textarea>
+
+          @if (
+            entradaForm.motivo().touched() &&
+            entradaForm.motivo().invalid()
+          ) {
+
+            @for (
+              error of entradaForm.motivo().errors();
+              track $index
+            ) {
+
+              <small class="error">
+                {{ error.message }}
+              </small>
+
+            }
+
+          }
+
+        </div>
+
+      </div>
+
+      <!-- BOTÓN -->
+      <div class="form-actions">
+
+        <button
+          type="submit"
+          class="btn-primary"
+          [disabled]="guardando() || cargandoProductos()"
+        >
+
+          @if (guardando()) {
+            Registrando entrada...
+          } @else {
+            Registrar entrada
+          }
+
+        </button>
+
+      </div>
+
+      <!-- ÉXITO -->
+      @if (mensaje()) {
+
+        <div
+          class="success-message"
+          role="status"
+        >
+          {{ mensaje() }}
+        </div>
+
+      }
+
+      <!-- ERROR -->
+      @if (errorRegistro()) {
+
+        <div
+          class="error-message"
+          role="alert"
+        >
+          {{ errorRegistro() }}
+        </div>
+
+      }
+
+    </form>
+
+  </div>
+
+</section>

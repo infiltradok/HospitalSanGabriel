@@ -1,0 +1,322 @@
+<section class="historial-page">
+
+  <!-- ENCABEZADO -->
+  <div class="page-header">
+
+    <h2>Historial de movimientos</h2>
+
+    <p>
+      Consulta las entradas y salidas registradas
+      en el inventario hospitalario.
+    </p>
+
+  </div>
+
+  <!-- INDICADORES -->
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <span>Movimientos</span>
+      <strong>{{ totalMovimientos() }}</strong>
+    </div>
+
+    <div class="stat-card entradas">
+      <span>Entradas</span>
+      <strong>{{ totalEntradas() }}</strong>
+    </div>
+
+    <div class="stat-card salidas">
+      <span>Salidas</span>
+      <strong>{{ totalSalidas() }}</strong>
+    </div>
+
+  </div>
+
+  <!-- FILTROS -->
+  <div class="filter-card">
+
+    <h3>Filtrar movimientos</h3>
+
+    <div class="filter-grid">
+
+      <!-- PRODUCTO -->
+      <div class="field">
+
+        <label for="producto">
+          Producto
+        </label>
+
+        <select
+          id="producto"
+          [value]="filtroProducto()"
+          (change)="cambiarProducto($event)"
+        >
+
+          <option value="">
+            Todos los productos
+          </option>
+
+          @for (
+            producto of productos();
+            track producto.id_producto
+          ) {
+
+            <option [value]="producto.id_producto">
+              {{ producto.codigo }} -
+              {{ producto.nombre }}
+            </option>
+
+          }
+
+        </select>
+
+      </div>
+
+      <!-- TIPO -->
+      <div class="field">
+
+        <label for="tipo">
+          Tipo de movimiento
+        </label>
+
+        <select
+          id="tipo"
+          [value]="filtroTipo()"
+          (change)="cambiarTipo($event)"
+        >
+
+          <option value="">
+            Todos los movimientos
+          </option>
+
+          <option value="ENTRADA">
+            Entradas
+          </option>
+
+          <option value="SALIDA">
+            Salidas
+          </option>
+
+        </select>
+
+      </div>
+
+      <!-- FECHA INICIAL -->
+      <div class="field">
+
+        <label for="fechaInicio">
+          Fecha inicial
+        </label>
+
+        <input
+          id="fechaInicio"
+          type="date"
+          [value]="filtroFechaInicio()"
+          (change)="cambiarFechaInicio($event)"
+        />
+
+      </div>
+
+      <!-- FECHA FINAL -->
+      <div class="field">
+
+        <label for="fechaFin">
+          Fecha final
+        </label>
+
+        <input
+          id="fechaFin"
+          type="date"
+          [value]="filtroFechaFin()"
+          (change)="cambiarFechaFin($event)"
+        />
+
+      </div>
+
+    </div>
+
+    <!-- BOTONES -->
+    <div class="filter-actions">
+
+      <button
+        type="button"
+        class="btn-secondary"
+        (click)="limpiarFiltros()"
+        [disabled]="cargando()"
+      >
+        Limpiar
+      </button>
+
+      <button
+        type="button"
+        class="btn-primary"
+        (click)="cargarMovimientos()"
+        [disabled]="cargando()"
+      >
+        Buscar
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- HISTORIAL -->
+  <div class="table-card">
+
+    <div class="table-header">
+
+      <h3>Movimientos registrados</h3>
+
+      <button
+        type="button"
+        class="btn-primary"
+        (click)="cargarMovimientos()"
+        [disabled]="cargando()"
+      >
+        Actualizar
+      </button>
+
+    </div>
+
+    @if (cargando()) {
+
+      <p class="loading-message">
+        Cargando historial...
+      </p>
+
+    }
+
+    @if (error()) {
+
+      <div class="error-message" role="alert">
+        {{ error() }}
+      </div>
+
+    }
+
+    @if (!cargando() && !error()) {
+
+      @if (movimientos().length > 0) {
+
+        <div class="table-responsive">
+
+          <table class="movimientos-table">
+
+            <thead>
+
+              <tr>
+                <th>Fecha</th>
+                <th>Producto</th>
+                <th>Tipo</th>
+                <th>Lote</th>
+                <th>Área</th>
+                <th>Cantidad</th>
+                <th>Stock anterior</th>
+                <th>Stock posterior</th>
+                <th>Motivo</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              @for (
+                movimiento of movimientos();
+                track movimiento.id_movimiento
+              ) {
+
+                <tr>
+
+                  <td>
+                    {{ movimiento.fecha_movimiento | date:'dd/MM/yyyy HH:mm' }}
+                  </td>
+
+                  <td>
+                    <strong>{{ movimiento.producto }}</strong>
+                    <small>{{ movimiento.codigo_producto }}</small>
+                  </td>
+
+                  <td>
+
+                    @if (movimiento.tipo_movimiento === 'ENTRADA') {
+
+                      <span class="badge-entrada">
+                        ENTRADA
+                      </span>
+
+                    } @else {
+
+                      <span class="badge-salida">
+                        SALIDA
+                      </span>
+
+                    }
+
+                  </td>
+
+                  <td>
+                    {{ movimiento.numero_lote }}
+                  </td>
+
+                  <td>
+                    {{ movimiento.area_destino || 'Almacén' }}
+                  </td>
+
+                  <td>
+
+                    <span
+                      [class.cantidad-entrada]="
+                        movimiento.tipo_movimiento === 'ENTRADA'
+                      "
+                      [class.cantidad-salida]="
+                        movimiento.tipo_movimiento === 'SALIDA'
+                      "
+                    >
+
+                      @if (movimiento.tipo_movimiento === 'ENTRADA') {
+                        +
+                      } @else {
+                        -
+                      }
+
+                      {{ movimiento.cantidad }}
+
+                    </span>
+
+                  </td>
+
+                  <td>
+                    {{ movimiento.stock_anterior }}
+                  </td>
+
+                  <td>
+                    {{ movimiento.stock_posterior }}
+                  </td>
+
+                  <td>
+                    {{ movimiento.motivo || 'Sin motivo' }}
+                  </td>
+
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      } @else {
+
+        <p class="empty-message">
+          No se encontraron movimientos.
+        </p>
+
+      }
+
+    }
+
+  </div>
+
+</section>

@@ -1,0 +1,287 @@
+.historial-page {
+  width: 100%;
+  min-width: 0;
+  color: #172b4d;
+}
+
+.historial-page *,
+.historial-page *::before,
+.historial-page *::after {
+  box-sizing: border-box;
+}
+
+/* ENCABEZADO */
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-header h2 {
+  font-size: 26px;
+  margin: 0 0 10px;
+}
+
+.page-header p {
+  color: #64748b;
+  margin: 0;
+}
+
+/* INDICADORES */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: white;
+  padding: 22px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stat-card span {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.stat-card strong {
+  font-size: 30px;
+  color: #172b4d;
+}
+
+.stat-card.entradas {
+  border-left: 4px solid #16a34a;
+}
+
+.stat-card.salidas {
+  border-left: 4px solid #dc2626;
+}
+
+/* TARJETAS */
+
+.filter-card,
+.table-card {
+  background: white;
+  border-radius: 14px;
+  padding: 26px;
+  margin-bottom: 24px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 3px 12px rgba(16, 42, 67, 0.06);
+  min-width: 0;
+}
+
+.filter-card h3,
+.table-card h3 {
+  margin: 0 0 22px;
+  font-size: 19px;
+}
+
+/* FILTROS */
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.field label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.field select,
+.field input {
+  width: 100%;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: white;
+  color: #172b4d;
+  font: inherit;
+}
+
+.field select:focus,
+.field input:focus {
+  outline: none;
+  border-color: #167d9c;
+  box-shadow: 0 0 0 3px rgba(22, 125, 156, 0.12);
+}
+
+/* BOTONES */
+
+.filter-actions,
+.table-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+
+.filter-actions {
+  margin-top: 22px;
+}
+
+.table-header {
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.table-header h3 {
+  margin: 0;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 11px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: #167d9c;
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #10647d;
+}
+
+.btn-secondary {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* TABLA */
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.movimientos-table {
+  width: 100%;
+  min-width: 1150px;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.movimientos-table th {
+  background: #f1f5f9;
+  padding: 13px;
+  text-align: left;
+  border-bottom: 2px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.movimientos-table td {
+  padding: 13px;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: middle;
+}
+
+.movimientos-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.movimientos-table td small {
+  display: block;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* ESTADOS */
+
+.badge-entrada,
+.badge-salida {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.badge-entrada {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge-salida {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.cantidad-entrada {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.cantidad-salida {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.error-message {
+  padding: 14px;
+  color: #991b1b;
+  background: #fee2e2;
+  border-radius: 8px;
+}
+
+.loading-message,
+.empty-message {
+  color: #64748b;
+  padding: 16px 0;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-card,
+  .table-card {
+    padding: 18px;
+  }
+
+  .filter-actions,
+  .table-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+  }
+
+}

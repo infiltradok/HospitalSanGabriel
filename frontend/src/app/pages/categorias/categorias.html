@@ -1,0 +1,329 @@
+<section class="categorias-page">
+
+  <!-- =====================================
+       ENCABEZADO
+  ===================================== -->
+
+  <div class="categorias-header">
+
+    <div>
+      <h2>Gestión de categorías</h2>
+
+      <p>
+        Administra las categorías de medicamentos,
+        insumos y materiales del inventario hospitalario.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="btn-actualizar"
+      (click)="cargarCategorias()"
+    >
+      Actualizar categorías
+    </button>
+
+  </div>
+
+
+  <!-- =====================================
+       TARJETAS DE INDICADORES
+  ===================================== -->
+
+  <section class="categorias-resumen">
+
+    <article class="resumen-card">
+
+      <span class="resumen-icon azul">▣</span>
+
+      <p>Total de categorías</p>
+
+      <h3>{{ totalCategorias() }}</h3>
+
+      <small>Categorías registradas</small>
+
+    </article>
+
+
+    <article class="resumen-card">
+
+      <span class="resumen-icon verde">✓</span>
+
+      <p>Categorías activas</p>
+
+      <h3>{{ categoriasActivas() }}</h3>
+
+      <small>Disponibles para productos</small>
+
+    </article>
+
+
+    <article class="resumen-card">
+
+      <span class="resumen-icon naranja">!</span>
+
+      <p>Categorías inactivas</p>
+
+      <h3>{{ categoriasInactivas() }}</h3>
+
+      <small>No disponibles actualmente</small>
+
+    </article>
+
+  </section>
+
+
+  <!-- =====================================
+       FORMULARIO DE REGISTRO
+  ===================================== -->
+
+  <section class="categoria-panel">
+
+    <div class="panel-header">
+
+      <h3>Registrar nueva categoría</h3>
+
+      <p>
+        Completa los siguientes datos para agregar
+        una categoría al inventario hospitalario.
+      </p>
+
+    </div>
+
+
+    <form
+      class="formulario-categoria"
+      (submit)="$event.preventDefault(); registrarCategoria()"
+    >
+
+      <!-- NOMBRE -->
+
+      <div class="campo-formulario">
+
+        <label for="nombre-categoria">
+          Nombre de la categoría *
+        </label>
+
+        <input
+          id="nombre-categoria"
+          type="text"
+          placeholder="Ejemplo: Material quirúrgico"
+          maxlength="100"
+          required
+          [value]="nombre()"
+          (input)="cambiarNombre($event)"
+        />
+
+        <small>
+          Máximo 100 caracteres.
+        </small>
+
+      </div>
+
+
+      <!-- DESCRIPCIÓN -->
+
+      <div class="campo-formulario">
+
+        <label for="descripcion-categoria">
+          Descripción
+        </label>
+
+        <textarea
+          id="descripcion-categoria"
+          placeholder="Describe los productos que pertenecerán a esta categoría"
+          rows="4"
+          maxlength="250"
+          [value]="descripcion()"
+          (input)="cambiarDescripcion($event)"
+        ></textarea>
+
+        <small>
+          {{ descripcion().length }}/250 caracteres.
+        </small>
+
+      </div>
+
+
+      <!-- MENSAJES -->
+
+      @if (mensajeError()) {
+
+        <div class="mensaje-error">
+          {{ mensajeError() }}
+        </div>
+
+      }
+
+      @if (mensajeExito()) {
+
+        <div class="mensaje-exito">
+          {{ mensajeExito() }}
+        </div>
+
+      }
+
+
+      <!-- BOTONES -->
+
+      <div class="formulario-acciones">
+
+        <button
+          type="button"
+          class="btn-limpiar"
+          [disabled]="guardando()"
+          (click)="limpiarFormulario()"
+        >
+          Limpiar
+        </button>
+
+        <button
+          type="submit"
+          class="btn-guardar"
+          [disabled]="guardando()"
+        >
+          {{ guardando() ? 'Registrando...' : 'Registrar categoría' }}
+        </button>
+
+      </div>
+
+    </form>
+
+  </section>
+
+
+  <!-- =====================================
+       LISTADO DE CATEGORÍAS
+  ===================================== -->
+
+  <section class="categoria-panel">
+
+    <div class="panel-header">
+
+      <h3>Categorías registradas</h3>
+
+      <p>
+        Consulta las categorías disponibles
+        en el inventario hospitalario.
+      </p>
+
+    </div>
+
+
+    <!-- CARGANDO -->
+
+    @if (cargando()) {
+
+      <p class="mensaje-info">
+        Cargando categorías...
+      </p>
+
+    }
+
+
+    <!-- ERROR -->
+
+    @if (!cargando() && errorListado()) {
+
+      <div class="mensaje-error">
+        {{ errorListado() }}
+      </div>
+
+    }
+
+
+    <!-- SIN RESULTADOS -->
+
+    @if (
+      !cargando() &&
+      !errorListado() &&
+      categorias().length === 0
+    ) {
+
+      <p class="mensaje-info">
+        Todavía no existen categorías registradas.
+      </p>
+
+    }
+
+
+    <!-- TABLA -->
+
+    @if (
+      !cargando() &&
+      !errorListado() &&
+      categorias().length > 0
+    ) {
+
+      <div class="tabla-contenedor">
+
+        <table class="tabla-categorias">
+
+          <thead>
+
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Estado</th>
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @for (
+              categoria of categorias();
+              track categoria.id_categoria
+            ) {
+
+              <tr>
+
+                <td>
+                  {{ categoria.id_categoria }}
+                </td>
+
+                <td>
+                  <strong>
+                    {{ categoria.nombre }}
+                  </strong>
+                </td>
+
+                <td>
+                  {{ categoria.descripcion || 'Sin descripción' }}
+                </td>
+
+                <td>
+
+                  @if (categoria.activo) {
+
+                    <span class="estado-activo">
+                      ACTIVA
+                    </span>
+
+                  } @else {
+
+                    <span class="estado-inactivo">
+                      INACTIVA
+                    </span>
+
+                  }
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    }
+
+  </section>
+
+</section>

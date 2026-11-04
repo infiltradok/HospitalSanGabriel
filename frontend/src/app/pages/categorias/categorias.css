@@ -1,0 +1,380 @@
+/* =========================================
+   CATEGORÍAS - HOSPITAL SAN GABRIEL
+========================================= */
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.categorias-page {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding-bottom: 30px;
+}
+
+/* =========================================
+   ENCABEZADO
+========================================= */
+
+.categorias-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.categorias-header h2 {
+  margin: 0 0 8px;
+  color: #102a43;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.categorias-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.btn-actualizar {
+  background: #1684a1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-actualizar:hover {
+  background: #116b83;
+}
+
+/* =========================================
+   TARJETAS DE INDICADORES
+========================================= */
+
+.categorias-resumen {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.resumen-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 13px;
+  padding: 22px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+.resumen-card p {
+  margin: 13px 0 8px;
+  color: #475569;
+  font-size: 14px;
+}
+
+.resumen-card h3 {
+  margin: 0;
+  color: #102a43;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.resumen-card small {
+  display: block;
+  margin-top: 8px;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.resumen-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 43px;
+  height: 43px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.resumen-icon.azul {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.resumen-icon.verde {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.resumen-icon.naranja {
+  background: #ffedd5;
+  color: #ea580c;
+}
+
+/* =========================================
+   PANELES
+========================================= */
+
+.categoria-panel {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 13px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+.panel-header {
+  margin-bottom: 22px;
+}
+
+.panel-header h3 {
+  margin: 0 0 8px;
+  color: #102a43;
+  font-size: 18px;
+}
+
+.panel-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* =========================================
+   FORMULARIO
+========================================= */
+
+.formulario-categoria {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.campo-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo-formulario label {
+  color: #102a43;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.campo-formulario input,
+.campo-formulario textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: white;
+  color: #102a43;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.campo-formulario textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.campo-formulario input:focus,
+.campo-formulario textarea:focus {
+  outline: none;
+  border-color: #1684a1;
+  box-shadow: 0 0 0 3px rgba(22, 132, 161, 0.12);
+}
+
+.campo-formulario small {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+/* =========================================
+   BOTONES DEL FORMULARIO
+========================================= */
+
+.formulario-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-limpiar,
+.btn-guardar {
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-limpiar {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.btn-limpiar:hover {
+  background: #e2e8f0;
+}
+
+.btn-guardar {
+  background: #1684a1;
+  color: white;
+}
+
+.btn-guardar:hover {
+  background: #116b83;
+}
+
+.btn-limpiar:disabled,
+.btn-guardar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   TABLA DE CATEGORÍAS
+========================================= */
+
+.tabla-contenedor {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tabla-categorias {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.tabla-categorias thead {
+  background: #eef3f8;
+}
+
+.tabla-categorias th {
+  padding: 14px 12px;
+  color: #102a43;
+  font-weight: 700;
+  text-align: left;
+}
+
+.tabla-categorias td {
+  padding: 15px 12px;
+  color: #334155;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.tabla-categorias tbody tr:hover {
+  background: #f8fafc;
+}
+
+.tabla-categorias tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* =========================================
+   ESTADOS
+========================================= */
+
+.estado-activo,
+.estado-inactivo {
+  display: inline-block;
+  padding: 6px 11px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.estado-activo {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.estado-inactivo {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* =========================================
+   MENSAJES
+========================================= */
+
+.mensaje-info,
+.mensaje-error,
+.mensaje-exito {
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.mensaje-info {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.mensaje-error {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.mensaje-exito {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+/* =========================================
+   DISEÑO RESPONSIVE
+========================================= */
+
+@media (max-width: 992px) {
+  .categorias-resumen {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .categorias-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .categorias-resumen {
+    grid-template-columns: 1fr;
+  }
+
+  .categoria-panel {
+    padding: 16px;
+  }
+
+  .resumen-card {
+    padding: 18px;
+  }
+
+  .categorias-header h2 {
+    font-size: 22px;
+  }
+
+  .formulario-acciones {
+    flex-direction: column;
+  }
+
+  .btn-limpiar,
+  .btn-guardar {
+    width: 100%;
+  }
+
+  .tabla-categorias {
+    min-width: 650px;
+  }
+}

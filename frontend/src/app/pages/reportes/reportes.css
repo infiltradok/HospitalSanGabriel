@@ -1,0 +1,372 @@
+/* =========================================
+   REPORTES - HOSPITAL SAN GABRIEL
+========================================= */
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.reportes-page {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding-bottom: 30px;
+}
+
+/* =========================================
+   ENCABEZADO
+========================================= */
+
+.reportes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.reportes-header h2 {
+  margin: 0 0 8px;
+  color: #102a43;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.reportes-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* =========================================
+   BOTONES
+========================================= */
+
+.btn-primary {
+  background: #1684a1;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #116b83;
+}
+
+.btn-primary:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   TARJETAS RESUMEN
+========================================= */
+
+.reportes-resumen {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.resumen-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 13px;
+  padding: 22px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+.resumen-card p {
+  margin: 13px 0 8px;
+  color: #475569;
+  font-size: 14px;
+}
+
+.resumen-card h3 {
+  margin: 0;
+  color: #102a43;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.resumen-card small {
+  display: block;
+  margin-top: 8px;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.resumen-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 43px;
+  height: 43px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.resumen-icon.rojo {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.resumen-icon.naranja {
+  background: #ffedd5;
+  color: #ea580c;
+}
+
+.resumen-icon.azul {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+/* =========================================
+   PANELES
+========================================= */
+
+.reporte-panel {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 13px;
+  padding: 22px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.panel-header h3 {
+  margin: 0 0 7px;
+  color: #102a43;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.panel-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* =========================================
+   TABLAS
+========================================= */
+
+.tabla-contenedor {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tabla-reportes {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.tabla-reportes thead {
+  background: #eef3f8;
+}
+
+.tabla-reportes th {
+  padding: 13px 12px;
+  color: #102a43;
+  text-align: left;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tabla-reportes td {
+  padding: 14px 12px;
+  color: #334155;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: middle;
+}
+
+.tabla-reportes tbody tr:hover {
+  background: #f8fafc;
+}
+
+.tabla-reportes tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* =========================================
+   COLORES DE CANTIDADES
+========================================= */
+
+.cantidad-alerta {
+  color: #dc2626 !important;
+  font-weight: 700;
+}
+
+.cantidad-principal {
+  color: #15803d !important;
+  font-weight: 700;
+}
+
+/* =========================================
+   ESTADOS
+========================================= */
+
+.badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge-danger {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.badge-warning {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.badge-success {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+/* =========================================
+   FILTROS DE FECHA
+========================================= */
+
+.filtros-fecha {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 18px;
+  margin-bottom: 20px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.campo-filtro {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.campo-filtro label {
+  color: #102a43;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.campo-filtro input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #102a43;
+  font-size: 13px;
+}
+
+.campo-filtro input:focus {
+  outline: none;
+  border-color: #1684a1;
+  box-shadow: 0 0 0 3px rgba(22, 132, 161, 0.12);
+}
+
+/* =========================================
+   MENSAJES
+========================================= */
+
+.mensaje-info,
+.mensaje-error,
+.mensaje-exito {
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.mensaje-info {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.mensaje-error {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.mensaje-exito {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+/* =========================================
+   DISEÑO RESPONSIVE
+========================================= */
+
+@media (max-width: 992px) {
+
+  .reportes-resumen {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .reportes-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .reportes-resumen {
+    grid-template-columns: 1fr;
+  }
+
+  .reporte-panel {
+    padding: 16px;
+  }
+
+  .resumen-card {
+    padding: 18px;
+  }
+
+  .reportes-header h2 {
+    font-size: 22px;
+  }
+
+  .filtros-fecha {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .campo-filtro {
+    width: 100%;
+  }
+
+  .filtros-fecha .btn-primary {
+    width: 100%;
+  }
+
+  .tabla-reportes {
+    min-width: 650px;
+  }
+
+}

@@ -1,0 +1,158 @@
+
+<section class="welcome">
+  <h2>Control de inventario</h2>
+  <p>
+    Administra medicamentos, insumos y materiales
+    médicos desde un solo lugar.
+  </p>
+</section>
+
+@if (error()) {
+  <section class="panel">
+    <p style="color: #dc2626;">
+      {{ error() }}
+    </p>
+    <button type="button" (click)="cargarIndicadores()">
+      Reintentar
+    </button>
+  </section>
+}
+
+@if (cargando()) {
+  <p>Cargando indicadores del inventario...</p>
+}
+
+<section class="cards">
+
+  <article class="card">
+    <span class="card-icon blue">▣</span>
+    <p>Productos activos</p>
+    <h2>{{ indicadores().productos_activos }}</h2>
+    <small>Productos registrados</small>
+  </article>
+
+  <article class="card">
+    <span class="card-icon orange">!</span>
+    <p>Stock bajo</p>
+    <h2>{{ indicadores().productos_stock_bajo }}</h2>
+    <small>Requieren reposición</small>
+  </article>
+
+  <article class="card">
+    <span class="card-icon red">◷</span>
+    <p>Próximos a vencer</p>
+    <h2>{{ indicadores().productos_proximos_vencer }}</h2>
+    <small>Productos por revisar</small>
+  </article>
+
+  <article class="card">
+    <span class="card-icon green">S/</span>
+    <p>Valor del inventario</p>
+    <h2>
+      S/ {{ indicadores().valor_inventario.toFixed(2) }}
+    </h2>
+    <small>Valor referencial</small>
+  </article>
+
+</section>
+
+<section class="panel">
+
+  <div class="movimientos-header">
+    <h2>Movimientos recientes</h2>
+
+    <button
+      type="button"
+      class="btn-actualizar"
+      (click)="cargarMovimientosRecientes()"
+    >
+      Actualizar
+    </button>
+  </div>
+
+  @if (cargandoMovimientos()) {
+    <p>Cargando movimientos recientes...</p>
+  }
+
+  @if (errorMovimientos()) {
+    <p class="mensaje-error">
+      {{ errorMovimientos() }}
+    </p>
+  }
+
+  @if (!cargandoMovimientos() && !errorMovimientos()) {
+
+    @if (movimientosRecientes().length === 0) {
+
+      <p>No hay movimientos registrados.</p>
+
+    } @else {
+
+      <div class="tabla-contenedor">
+
+        <table class="tabla-movimientos">
+
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Producto</th>
+              <th>Tipo</th>
+              <th>Cantidad</th>
+              <th>Área</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            @for (movimiento of movimientosRecientes(); track movimiento.id_movimiento) {
+
+              <tr>
+
+                <td>
+                  {{ formatearFecha(movimiento.fecha_movimiento) }}
+                </td>
+
+                <td>
+                  <strong>{{ movimiento.producto }}</strong>
+                  <br>
+                  <small>{{ movimiento.codigo_producto }}</small>
+                </td>
+
+                <td>
+                  <span
+                    class="tipo-badge"
+                    [class.entrada]="movimiento.tipo_movimiento === 'ENTRADA'"
+                    [class.salida]="movimiento.tipo_movimiento === 'SALIDA'"
+                  >
+                    {{ movimiento.tipo_movimiento }}
+                  </span>
+                </td>
+
+                <td>
+                  <strong
+                    [class.cantidad-entrada]="movimiento.tipo_movimiento === 'ENTRADA'"
+                    [class.cantidad-salida]="movimiento.tipo_movimiento === 'SALIDA'"
+                  >
+                    {{ movimiento.tipo_movimiento === 'ENTRADA' ? '+' : '-' }}{{ movimiento.cantidad }}
+                  </strong>
+                </td>
+
+                <td>
+                  {{ movimiento.area_destino || 'Almacén' }}
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    }
+
+  }
+
+</section>

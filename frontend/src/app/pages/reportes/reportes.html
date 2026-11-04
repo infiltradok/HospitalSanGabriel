@@ -1,0 +1,414 @@
+<section class="reportes-page">
+
+  <!-- ENCABEZADO -->
+
+  <div class="reportes-header">
+
+    <div>
+      <h2>Reportes de inventario</h2>
+
+      <p>
+        Consulta el estado del stock, los vencimientos
+        y los productos más solicitados del hospital.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="btn-primary"
+      (click)="actualizarReportes()"
+    >
+      Actualizar reportes
+    </button>
+
+  </div>
+
+
+  <!-- TARJETAS DE INDICADORES -->
+
+  <section class="reportes-resumen">
+
+    <article class="resumen-card">
+
+      <div class="resumen-icon rojo">!</div>
+
+      <p>Productos con stock bajo</p>
+
+      <h3>{{ totalStockBajo() }}</h3>
+
+      <small>Requieren reposición</small>
+
+    </article>
+
+
+    <article class="resumen-card">
+
+      <div class="resumen-icon naranja">◷</div>
+
+      <p>Alertas de vencimiento</p>
+
+      <h3>{{ totalVencimientos() }}</h3>
+
+      <small>Lotes que requieren revisión</small>
+
+    </article>
+
+
+    <article class="resumen-card">
+
+      <div class="resumen-icon azul">▣</div>
+
+      <p>Productos más solicitados</p>
+
+      <h3>{{ totalSolicitados() }}</h3>
+
+      <small>Productos con salidas en el periodo</small>
+
+    </article>
+
+  </section>
+
+
+  <!-- REPORTE DE STOCK BAJO -->
+
+  <section class="reporte-panel">
+
+    <div class="panel-header">
+
+      <div>
+        <h3>Productos con stock bajo</h3>
+
+        <p>
+          Medicamentos e insumos que necesitan reposición.
+        </p>
+      </div>
+
+    </div>
+
+    @if (cargandoStock()) {
+
+      <p class="mensaje-info">
+        Cargando reporte de stock...
+      </p>
+
+    } @else if (errorStock()) {
+
+      <p class="mensaje-error">
+        {{ errorStock() }}
+      </p>
+
+    } @else if (productosStockBajo().length === 0) {
+
+      <p class="mensaje-exito">
+        No se encontraron productos con stock bajo.
+      </p>
+
+    } @else {
+
+      <div class="tabla-contenedor">
+
+        <table class="tabla-reportes">
+
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Producto</th>
+              <th>Categoría</th>
+              <th>Stock actual</th>
+              <th>Stock mínimo</th>
+              <th>Unidad</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            @for (
+              producto of productosStockBajo();
+              track producto.id_producto
+            ) {
+
+              <tr>
+
+                <td>{{ producto.codigo }}</td>
+
+                <td>
+                  <strong>{{ producto.nombre }}</strong>
+                </td>
+
+                <td>{{ producto.categoria }}</td>
+
+                <td class="cantidad-alerta">
+                  {{ producto.stock_actual }}
+                </td>
+
+                <td>{{ producto.stock_minimo }}</td>
+
+                <td>{{ producto.unidad_medida }}</td>
+
+                <td>
+                  <span class="badge badge-danger">
+                    {{ producto.estado_stock }}
+                  </span>
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    }
+
+  </section>
+
+
+  <!-- REPORTE DE VENCIMIENTOS -->
+
+  <section class="reporte-panel">
+
+    <div class="panel-header">
+
+      <div>
+        <h3>Control de vencimientos</h3>
+
+        <p>
+          Consulta los lotes próximos a vencer o vencidos.
+        </p>
+      </div>
+
+    </div>
+
+    @if (cargandoVencimientos()) {
+
+      <p class="mensaje-info">
+        Cargando reporte de vencimientos...
+      </p>
+
+    } @else if (errorVencimientos()) {
+
+      <p class="mensaje-error">
+        {{ errorVencimientos() }}
+      </p>
+
+    } @else if (productosVencimiento().length === 0) {
+
+      <p class="mensaje-exito">
+        No se encontraron alertas de vencimiento.
+      </p>
+
+    } @else {
+
+      <div class="tabla-contenedor">
+
+        <table class="tabla-reportes">
+
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Producto</th>
+              <th>Lote</th>
+              <th>Fecha de vencimiento</th>
+              <th>Stock del lote</th>
+              <th>Días restantes</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            @for (
+              producto of productosVencimiento();
+              track producto.codigo + producto.numero_lote
+            ) {
+
+              <tr>
+
+                <td>{{ producto.codigo }}</td>
+
+                <td>
+                  <strong>{{ producto.producto }}</strong>
+                </td>
+
+                <td>{{ producto.numero_lote }}</td>
+
+                <td>{{ producto.fecha_vencimiento }}</td>
+
+                <td>{{ producto.stock_lote }}</td>
+
+                <td>{{ producto.dias_restantes }}</td>
+
+                <td>
+                  <span
+                    class="badge"
+                    [class.badge-danger]="producto.estado_vencimiento.toUpperCase().includes('VENCIDO')"
+                    [class.badge-warning]="!producto.estado_vencimiento.toUpperCase().includes('VENCIDO')"
+                  >
+                    {{ producto.estado_vencimiento }}
+                  </span>
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    }
+
+  </section>
+
+
+  <!-- REPORTE DE PRODUCTOS MÁS SOLICITADOS -->
+
+  <section class="reporte-panel">
+
+    <div class="panel-header">
+
+      <div>
+        <h3>Productos más solicitados</h3>
+
+        <p>
+          Consulta los medicamentos e insumos con más
+          salidas durante un periodo.
+        </p>
+      </div>
+
+    </div>
+
+
+    <!-- FILTROS DE FECHA -->
+
+    <div class="filtros-fecha">
+
+      <div class="campo-filtro">
+
+        <label for="fecha-inicio">
+          Fecha inicial
+        </label>
+
+        <input
+          id="fecha-inicio"
+          type="date"
+          [value]="fechaInicio()"
+          (change)="cambiarFechaInicio($event)"
+        />
+
+      </div>
+
+
+      <div class="campo-filtro">
+
+        <label for="fecha-fin">
+          Fecha final
+        </label>
+
+        <input
+          id="fecha-fin"
+          type="date"
+          [value]="fechaFin()"
+          (change)="cambiarFechaFin($event)"
+        />
+
+      </div>
+
+
+      <button
+        type="button"
+        class="btn-primary"
+        [disabled]="cargandoSolicitados()"
+        (click)="cargarMasSolicitados()"
+      >
+        Consultar
+      </button>
+
+    </div>
+
+
+    <!-- RESULTADOS -->
+
+    @if (cargandoSolicitados()) {
+
+      <p class="mensaje-info">
+        Consultando productos más solicitados...
+      </p>
+
+    } @else if (errorSolicitados()) {
+
+      <p class="mensaje-error">
+        {{ errorSolicitados() }}
+      </p>
+
+    } @else if (productosMasSolicitados().length === 0) {
+
+      <p class="mensaje-info">
+        No se encontraron salidas en el periodo seleccionado.
+      </p>
+
+    } @else {
+
+      <div class="tabla-contenedor">
+
+        <table class="tabla-reportes">
+
+          <thead>
+            <tr>
+              <th>Posición</th>
+              <th>Código</th>
+              <th>Producto</th>
+              <th>Total de salidas</th>
+              <th>Número de movimientos</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            @for (
+              producto of productosMasSolicitados();
+              track producto.id_producto;
+              let posicion = $index
+            ) {
+
+              <tr>
+
+                <td>
+                  <strong>{{ posicion + 1 }}</strong>
+                </td>
+
+                <td>{{ producto.codigo }}</td>
+
+                <td>
+                  <strong>{{ producto.nombre }}</strong>
+                </td>
+
+                <td class="cantidad-principal">
+                  {{ producto.total_salidas }}
+                </td>
+
+                <td>
+                  {{ producto.numero_movimientos }}
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    }
+
+  </section>
+
+</section>

@@ -1,0 +1,182 @@
+
+.welcome {
+  background: #167d9c;
+  color: white;
+  padding: 28px;
+  border-radius: 15px;
+  margin-bottom: 25px;
+}
+
+.welcome h2 {
+  margin-top: 0;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.card,
+.panel {
+  background: white;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px #102a4310;
+}
+
+.card p,
+.panel p {
+  color: #64748b;
+}
+
+.card h2 {
+  font-size: 27px;
+  margin: 10px 0;
+}
+
+.card small {
+  color: #94a3b8;
+}
+
+.card-icon {
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+.blue {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.orange {
+  background: #ffedd5;
+  color: #ea580c;
+}
+
+.red {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.green {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.panel {
+  margin-top: 25px;
+}
+
+@media (max-width: 1050px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* MOVIMIENTOS RECIENTES */
+
+.movimientos-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.movimientos-header h2 {
+  margin: 0;
+}
+
+.btn-actualizar {
+  background: #1784a0;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-actualizar:hover {
+  background: #116c83;
+}
+
+.tabla-contenedor {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tabla-movimientos {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.tabla-movimientos th {
+  background: #eef3f8;
+  color: #102a43;
+  padding: 12px;
+  text-align: left;
+}
+
+.tabla-movimientos td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.tabla-movimientos tbody tr:hover {
+  background: #f8fafc;
+}
+
+.tabla-movimientos small {
+  color: #64748b;
+}
+
+.tipo-badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.tipo-badge.entrada {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.tipo-badge.salida {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.cantidad-entrada {
+  color: #16a34a;
+}
+
+.cantidad-salida {
+  color: #dc2626;
+}
+
+.mensaje-error {
+  color: #dc2626;
+}
+
+@media (max-width: 768px) {
+  .tabla-movimientos {
+    min-width: 650px;
+  }
+}
