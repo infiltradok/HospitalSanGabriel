@@ -193,3 +193,22 @@ nav a.active {
     grid-template-columns: 1fr;
   }
 }
+
+.session-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logout-button {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background: #b91c1c;
+}

@@ -1,0 +1,48 @@
+<div class="login-page">
+  <div class="login-card">
+
+    <div class="logo">✚</div>
+
+    <h1>Hospital San Gabriel</h1>
+    <p class="subtitle">Sistema de Inventario Hospitalario</p>
+
+    <h2>Iniciar sesión</h2>
+
+    <form (ngSubmit)="ingresar()">
+
+      <label for="usuario">Usuario</label>
+      <input
+        id="usuario"
+        type="text"
+        name="usuario"
+        [(ngModel)]="usuario"
+        placeholder="Ingresa tu usuario"
+        autocomplete="username"
+        required
+      />
+
+      <label for="password">Contraseña</label>
+      <input
+        id="password"
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        placeholder="Ingresa tu contraseña"
+        autocomplete="current-password"
+        required
+      />
+
+      @if (error()) {
+        <div class="error">{{ error() }}</div>
+      }
+
+      <button type="submit" [disabled]="cargando()">
+        {{ cargando() ? 'Verificando...' : 'Ingresar al sistema' }}
+      </button>
+
+    </form>
+
+    <p class="footer">Acceso autorizado al personal hospitalario</p>
+
+  </div>
+</div>

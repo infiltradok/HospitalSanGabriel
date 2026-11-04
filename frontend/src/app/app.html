@@ -1,3 +1,4 @@
+@if (auth.autenticado()) {
 
 <div class="layout">
 
@@ -56,7 +57,15 @@
         <p>Hospital San Gabriel</p>
       </div>
 
-      <span class="user">Administrador</span>
+      <div class="session-controls">
+        <span class="user">{{ auth.obtenerNombre() }}</span>
+        <button
+          type="button"
+          (click)="cerrarSesion()"
+          class="logout-button">
+          Cerrar sesión
+        </button>
+      </div>
     </header>
 
     <router-outlet></router-outlet>
@@ -64,3 +73,9 @@
   </main>
 
 </div>
+
+} @else {
+
+  <router-outlet></router-outlet>
+
+}
