@@ -9,6 +9,7 @@ from apis.salida_api import router as salida_router
 from apis.movimiento_api import router as movimiento_router
 from apis.dashboard_api import router as dashboard_router
 from apis.reporte_api import router as reporte_router
+from apis.auth_api import router as auth_router
 
 app = FastAPI(
     title="Hospital San Gabriel API",
@@ -31,6 +32,7 @@ app.include_router(salida_router)
 app.include_router(movimiento_router)
 app.include_router(dashboard_router)
 app.include_router(reporte_router)
+app.include_router(auth_router)
 
 @app.get("/")
 def inicio():
